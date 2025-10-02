@@ -1,0 +1,298 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define styles -->
+  <defs>
+    <style>
+      .box { stroke: #333; stroke-width: 2; }
+      .user { fill: #E3F2FD; }
+      .component { fill: #FFF3E0; }
+      .storage { fill: #F3E5F5; }
+      .api { fill: #E8F5E9; }
+      .feature { fill: #FFF9C4; }
+      .arrow { stroke: #666; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-bi { stroke: #666; stroke-width: 2; fill: none; marker-end: url(#arrowhead); marker-start: url(#arrowhead-start); }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+      .title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #1a1a1a; }
+      .section-title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #0D47A1; }
+      .small-text { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+    </style>
+    
+    <!-- Arrow markers -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666" />
+    </marker>
+    <marker id="arrowhead-start" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto">
+      <polygon points="10 0, 0 3, 10 6" fill="#666" />
+    </marker>
+  </defs>
+  
+  <!-- Main Title -->
+  <rect x="10" y="10" width="1380" height="50" fill="#1976D2" rx="5"/>
+  <text x="700" y="40" class="section-title" fill="white" text-anchor="middle" font-size="20">AI-Powered Interview Assistant - Complete System Architecture</text>
+  
+  <!-- USER LAYER -->
+  <text x="20" y="90" class="section-title">👤 USER LAYER</text>
+  
+  <!-- Candidate -->
+  <rect x="50" y="100" width="180" height="120" class="box user" rx="5"/>
+  <text x="140" y="125" class="title" text-anchor="middle">CANDIDATE</text>
+  <text x="60" y="145" class="small-text">• Uploads Resume</text>
+  <text x="60" y="160" class="small-text">• Provides Missing Info</text>
+  <text x="60" y="175" class="small-text">• Answers Questions</text>
+  <text x="60" y="190" class="small-text">• Views Progress</text>
+  <text x="60" y="205" class="small-text">• Pauses/Resumes</text>
+  
+  <!-- Interviewer -->
+  <rect x="270" y="100" width="180" height="120" class="box user" rx="5"/>
+  <text x="360" y="125" class="title" text-anchor="middle">INTERVIEWER</text>
+  <text x="280" y="145" class="small-text">• Views Dashboard</text>
+  <text x="280" y="160" class="small-text">• Filters Candidates</text>
+  <text x="280" y="175" class="small-text">• Reviews Answers</text>
+  <text x="280" y="190" class="small-text">• Checks Scores</text>
+  <text x="280" y="205" class="small-text">• Exports Data</text>
+  
+  <!-- COMPONENT LAYER -->
+  <text x="20" y="260" class="section-title">⚛️ REACT COMPONENTS</text>
+  
+  <!-- Tab Container -->
+  <rect x="50" y="270" width="400" height="60" class="box component" rx="5"/>
+  <text x="250" y="290" class="title" text-anchor="middle">App Router (React Router)</text>
+  <text x="70" y="310" class="small-text">• Tab Navigation</text>
+  <text x="70" y="325" class="small-text">• Route Guards</text>
+  <text x="250" y="310" class="small-text">• Protected Routes</text>
+  <text x="250" y="325" class="small-text">• Session Management</text>
+  
+  <!-- Interviewee Tab -->
+  <rect x="30" y="350" width="200" height="280" class="box component" rx="5"/>
+  <text x="130" y="370" class="title" text-anchor="middle">INTERVIEWEE TAB</text>
+  
+  <rect x="45" y="380" width="170" height="45" fill="#BBDEFB" rx="3"/>
+  <text x="130" y="395" class="text" text-anchor="middle" font-weight="bold">Resume Upload</text>
+  <text x="55" y="410" class="small-text">PDF/DOCX Parser</text>
+  <text x="55" y="420" class="small-text">Field Extraction</text>
+  
+  <rect x="45" y="435" width="170" height="45" fill="#BBDEFB" rx="3"/>
+  <text x="130" y="450" class="text" text-anchor="middle" font-weight="bold">Chat Interface</text>
+  <text x="55" y="465" class="small-text">Message Display</text>
+  <text x="55" y="475" class="small-text">Input Field</text>
+  
+  <rect x="45" y="490" width="170" height="45" fill="#BBDEFB" rx="3"/>
+  <text x="130" y="505" class="text" text-anchor="middle" font-weight="bold">Question Display</text>
+  <text x="55" y="520" class="small-text">Timer Component</text>
+  <text x="55" y="530" class="small-text">Progress Bar</text>
+  
+  <rect x="45" y="545" width="170" height="45" fill="#BBDEFB" rx="3"/>
+  <text x="130" y="560" class="text" text-anchor="middle" font-weight="bold">Answer Input</text>
+  <text x="55" y="575" class="small-text">Text Area</text>
+  <text x="55" y="585" class="small-text">Submit Button</text>
+  
+  <rect x="45" y="600" width="170" height="20" fill="#90CAF9" rx="3"/>
+  <text x="130" y="613" class="small-text" text-anchor="middle">Completion Screen</text>
+  
+  <!-- Interviewer Tab -->
+  <rect x="250" y="350" width="200" height="280" class="box component" rx="5"/>
+  <text x="350" y="370" class="title" text-anchor="middle">INTERVIEWER TAB</text>
+  
+  <rect x="265" y="380" width="170" height="45" fill="#C5E1A5" rx="3"/>
+  <text x="350" y="395" class="text" text-anchor="middle" font-weight="bold">Dashboard Header</text>
+  <text x="275" y="410" class="small-text">Search Bar</text>
+  <text x="275" y="420" class="small-text">Filter Controls</text>
+  
+  <rect x="265" y="435" width="170" height="45" fill="#C5E1A5" rx="3"/>
+  <text x="350" y="450" class="text" text-anchor="middle" font-weight="bold">Candidate List</text>
+  <text x="275" y="465" class="small-text">Table/Grid View</text>
+  <text x="275" y="475" class="small-text">Sort Controls</text>
+  
+  <rect x="265" y="490" width="170" height="45" fill="#C5E1A5" rx="3"/>
+  <text x="350" y="505" class="text" text-anchor="middle" font-weight="bold">Candidate Card</text>
+  <text x="275" y="520" class="small-text">Score Display</text>
+  <text x="275" y="530" class="small-text">Summary Preview</text>
+  
+  <rect x="265" y="545" width="170" height="45" fill="#C5E1A5" rx="3"/>
+  <text x="350" y="560" class="text" text-anchor="middle" font-weight="bold">Detail Modal</text>
+  <text x="275" y="575" class="small-text">Full Chat History</text>
+  <text x="275" y="585" class="small-text">AI Analysis</text>
+  
+  <rect x="265" y="600" width="170" height="20" fill="#AED581" rx="3"/>
+  <text x="350" y="613" class="small-text" text-anchor="middle">Export Controls</text>
+  
+  <!-- STATE MANAGEMENT -->
+  <text x="500" y="260" class="section-title">🗄️ STATE MANAGEMENT</text>
+  
+  <rect x="500" y="270" width="380" height="360" class="box storage" rx="5" stroke-dasharray="5,5"/>
+  <text x="690" y="290" class="title" text-anchor="middle">REDUX STORE</text>
+  
+  <!-- Redux Slices -->
+  <rect x="520" y="305" width="160" height="90" fill="#E1BEE7" rx="3"/>
+  <text x="600" y="320" class="text" text-anchor="middle" font-weight="bold">Candidates Slice</text>
+  <text x="530" y="335" class="small-text">• candidateList[]</text>
+  <text x="530" y="350" class="small-text">• selectedCandidate</text>
+  <text x="530" y="365" class="small-text">• addCandidate()</text>
+  <text x="530" y="380" class="small-text">• updateCandidate()</text>
+  
+  <rect x="700" y="305" width="160" height="90" fill="#E1BEE7" rx="3"/>
+  <text x="780" y="320" class="text" text-anchor="middle" font-weight="bold">Sessions Slice</text>
+  <text x="710" y="335" class="small-text">• activeSessions[]</text>
+  <text x="710" y="350" class="small-text">• completedSessions[]</text>
+  <text x="710" y="365" class="small-text">• createSession()</text>
+  <text x="710" y="380" class="small-text">• updateSession()</text>
+  
+  <rect x="520" y="410" width="160" height="90" fill="#E1BEE7" rx="3"/>
+  <text x="600" y="425" class="text" text-anchor="middle" font-weight="bold">Current Session</text>
+  <text x="530" y="440" class="small-text">• questions[]</text>
+  <text x="530" y="455" class="small-text">• answers[]</text>
+  <text x="530" y="470" class="small-text">• currentIndex</text>
+  <text x="530" y="485" class="small-text">• timerState</text>
+  
+  <rect x="700" y="410" width="160" height="90" fill="#E1BEE7" rx="3"/>
+  <text x="780" y="425" class="text" text-anchor="middle" font-weight="bold">UI State Slice</text>
+  <text x="710" y="440" class="small-text">• activeTab</text>
+  <text x="710" y="455" class="small-text">• modalStates</text>
+  <text x="710" y="470" class="small-text">• loadingStates</text>
+  <text x="710" y="485" class="small-text">• filters/sorting</text>
+  
+  <!-- Middleware -->
+  <rect x="520" y="515" width="340" height="50" fill="#CE93D8" rx="3"/>
+  <text x="690" y="535" class="text" text-anchor="middle" font-weight="bold">Redux Middleware</text>
+  <text x="530" y="555" class="small-text">• Thunk (async actions) • Logger • Timer Middleware</text>
+  
+  <!-- Persistence -->
+  <rect x="520" y="575" width="340" height="45" fill="#BA68C8" rx="3"/>
+  <text x="690" y="593" class="text" text-anchor="middle" font-weight="bold">Redux Persist Config</text>
+  <text x="530" y="610" class="small-text">Whitelist: candidates, sessions, currentSession</text>
+  
+  <!-- STORAGE LAYER -->
+  <text x="920" y="260" class="section-title">💾 PERSISTENCE</text>
+  
+  <rect x="920" y="270" width="180" height="80" class="box storage" rx="5"/>
+  <text x="1010" y="290" class="title" text-anchor="middle">IndexedDB</text>
+  <text x="930" y="310" class="small-text">• Candidate Records</text>
+  <text x="930" y="325" class="small-text">• Session History</text>
+  <text x="930" y="340" class="small-text">• Q&A Pairs</text>
+  
+  <rect x="920" y="365" width="180" height="80" class="box storage" rx="5"/>
+  <text x="1010" y="385" class="title" text-anchor="middle">LocalStorage</text>
+  <text x="930" y="405" class="small-text">• Active Session ID</text>
+  <text x="930" y="420" class="small-text">• User Preferences</text>
+  <text x="930" y="435" class="small-text">• Theme Settings</text>
+  
+  <rect x="920" y="460" width="180" height="60" class="box storage" rx="5"/>
+  <text x="1010" y="480" class="title" text-anchor="middle">Session Storage</text>
+  <text x="930" y="500" class="small-text">• Temp Timer State</text>
+  <text x="930" y="515" class="small-text">• Tab State</text>
+  
+  <!-- API LAYER -->
+  <text x="920" y="560" class="section-title">🤖 EXTERNAL APIs</text>
+  
+  <rect x="920" y="570" width="180" height="60" class="box api" rx="5"/>
+  <text x="1010" y="590" class="title" text-anchor="middle">AI Service (GPT-4)</text>
+  <text x="930" y="610" class="small-text">• Generate Questions</text>
+  <text x="930" y="625" class="small-text">• Evaluate Answers</text>
+  
+  <rect x="1120" y="270" width="180" height="60" class="box feature" rx="5"/>
+  <text x="1210" y="290" class="title" text-anchor="middle">Resume Parser</text>
+  <text x="1130" y="310" class="small-text">• PDF.js / Mammoth.js</text>
+  <text x="1130" y="325" class="small-text">• NLP Extraction</text>
+  
+  <rect x="1120" y="345" width="180" height="60" class="box feature" rx="5"/>
+  <text x="1210" y="365" class="title" text-anchor="middle">Timer Service</text>
+  <text x="1130" y="385" class="small-text">• Countdown Logic</text>
+  <text x="1130" y="400" class="small-text">• Auto-submit Handler</text>
+  
+  <rect x="1120" y="420" width="180" height="60" class="box feature" rx="5"/>
+  <text x="1210" y="440" class="title" text-anchor="middle">Validation Service</text>
+  <text x="1130" y="460" class="small-text">• Email/Phone Validator</text>
+  <text x="1130" y="475" class="small-text">• Resume File Check</text>
+  
+  <rect x="1120" y="495" width="180" height="60" class="box feature" rx="5"/>
+  <text x="1210" y="515" class="title" text-anchor="middle">Export Service</text>
+  <text x="1130" y="535" class="small-text">• PDF Generation</text>
+  <text x="1130" y="550" class="small-text">• CSV Export</text>
+  
+  <!-- DATA FLOW SECTION -->
+  <text x="20" y="680" class="section-title">🔄 KEY DATA FLOWS</text>
+  
+  <!-- Flow 1 -->
+  <rect x="30" y="690" width="400" height="110" fill="#FFF9C4" stroke="#FBC02D" stroke-width="2" rx="5"/>
+  <text x="40" y="708" class="text" font-weight="bold">Flow 1: Resume Upload → Interview Start</text>
+  <text x="40" y="725" class="small-text">1. Candidate uploads resume → Resume Parser extracts data</text>
+  <text x="40" y="740" class="small-text">2. Data saved to Candidates Slice → Persisted to IndexedDB</text>
+  <text x="40" y="755" class="small-text">3. Missing fields? → Chatbot collects info → Update state</text>
+  <text x="40" y="770" class="small-text">4. Complete? → Create Session → Call AI for Q1 → Start timer</text>
+  <text x="40" y="785" class="small-text">5. Display question in Chat Interface</text>
+  
+  <!-- Flow 2 -->
+  <rect x="450" y="690" width="400" height="110" fill="#E1F5FE" stroke="#0288D1" stroke-width="2" rx="5"/>
+  <text x="460" y="708" class="text" font-weight="bold">Flow 2: Answer Submission → Next Question</text>
+  <text x="460" y="725" class="small-text">1. Timer expires OR Submit clicked → Auto-submit answer</text>
+  <text x="460" y="740" class="small-text">2. Save answer to Current Session → Call AI to evaluate</text>
+  <text x="460" y="755" class="small-text">3. AI returns score → Update session state → Persist</text>
+  <text x="460" y="770" class="small-text">4. currentIndex++ → Generate next question → Reset timer</text>
+  <text x="460" y="785" class="small-text">5. If Q6 done → Generate AI Summary → Show completion</text>
+  
+  <!-- Flow 3 -->
+  <rect x="870" y="690" width="400" height="110" fill="#F3E5F5" stroke="#8E24AA" stroke-width="2" rx="5"/>
+  <text x="880" y="708" class="text" font-weight="bold">Flow 3: Dashboard View → Candidate Details</text>
+  <text x="880" y="725" class="small-text">1. Interviewer opens dashboard → Load all candidates from Redux</text>
+  <text x="880" y="740" class="small-text">2. Apply filters/sorting → Render Candidate Cards</text>
+  <text x="880" y="755" class="small-text">3. Click candidate → Fetch full session data from IndexedDB</text>
+  <text x="880" y="770" class="small-text">4. Display Detail Modal → Show Q&A, scores, AI summary</text>
+  <text x="880" y="785" class="small-text">5. Export option → Generate PDF/CSV from session data</text>
+  
+  <!-- Connection Arrows -->
+  <!-- User to Components -->
+  <path d="M 140 220 L 130 270" class="arrow"/>
+  <path d="M 360 220 L 350 270" class="arrow"/>
+  
+  <!-- Components to Router -->
+  <line x1="230" y1="330" x2="500" y2="330" class="arrow-bi"/>
+  
+  <!-- Router to Redux -->
+  <path d="M 450 400 L 520 400" class="arrow-bi"/>
+  
+  <!-- Redux to Storage -->
+  <path d="M 880 350 L 920 350" class="arrow"/>
+  <path d="M 880 400 L 920 400" class="arrow"/>
+  <path d="M 880 490 L 920 490" class="arrow"/>
+  
+  <!-- Components to AI -->
+  <path d="M 230 500 Q 600 500 920 600" class="arrow" stroke="#4CAF50"/>
+  <path d="M 350 500 Q 650 520 920 600" class="arrow" stroke="#4CAF50"/>
+  
+  <!-- Components to Services -->
+  <path d="M 130 350 Q 625 250 1120 300" class="arrow" stroke="#FF9800"/>
+  <path d="M 130 450 Q 625 350 1120 375" class="arrow" stroke="#FF9800"/>
+  <path d="M 350 450 Q 735 380 1120 450" class="arrow" stroke="#FF9800"/>
+  <path d="M 350 550 Q 735 500 1120 525" class="arrow" stroke="#FF9800"/>
+  
+  <!-- Legend -->
+  <rect x="30" y="820" width="1340" height="150" fill="white" stroke="#999" stroke-width="1" rx="5"/>
+  <text x="40" y="840" class="section-title">📋 LEGEND & TECHNICAL NOTES</text>
+  
+  <rect x="50" y="850" width="15" height="15" fill="#E3F2FD" stroke="#333"/>
+  <text x="70" y="862" class="small-text">User Interface Layer</text>
+  
+  <rect x="200" y="850" width="15" height="15" fill="#FFF3E0" stroke="#333"/>
+  <text x="220" y="862" class="small-text">React Components</text>
+  
+  <rect x="350" y="850" width="15" height="15" fill="#F3E5F5" stroke="#333"/>
+  <text x="370" y="862" class="small-text">State Management</text>
+  
+  <rect x="500" y="850" width="15" height="15" fill="#E8F5E9" stroke="#333"/>
+  <text x="520" y="862" class="small-text">External APIs</text>
+  
+  <rect x="650" y="850" width="15" height="15" fill="#FFF9C4" stroke="#333"/>
+  <text x="670" y="862" class="small-text">Services/Utils</text>
+  
+  <line x1="800" y1="857" x2="830" y2="857" class="arrow"/>
+  <text x="835" y="862" class="small-text">One-way Data Flow</text>
+  
+  <line x1="950" y1="857" x2="980" y2="857" class="arrow-bi"/>
+  <text x="985" y="862" class="small-text">Two-way Sync</text>
+  
+  <text x="50" y="890" class="small-text" font-weight="bold">Key Technologies:</text>
+  <text x="50" y="905" class="small-text">• React 18 + React Router v6 • Redux Toolkit + Redux Persist • Tailwind CSS + shadcn/ui</text>
+  <text x="50" y="920" class="small-text">• IndexedDB (Dexie.js) • OpenAI GPT-4 API • PDF.js + Mammoth.js • Axios + Day.js</text>
+  
+  <text x="50" y="945" class="small-text" font-weight="bold">Critical Features:</text>
+  <text x="50" y="960" class="small-text">✓ Welcome Back Modal (detects incomplete sessions) ✓ Auto-save every 5s ✓ Timer auto-submit ✓ Real-time persistence</text>
+</svg>

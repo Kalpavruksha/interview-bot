@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comprehensive API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #cce7ff; border: 1px solid #99d6ff; color: #004085; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+        .question { margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h1>Comprehensive API Test</h1>
+    <div>
+        <button onclick="testEnvVars()">Test Environment Variables</button>
+        <button onclick="testDirectAPI()">Test Direct API Call</button>
+        <button onclick="testQuestionGeneration()">Test Question Generation</button>
+        <button onclick="testMultipleGenerations()">Test Multiple Generations</button>
+    </div>
+    <div id="result"></div>
+
+    <script type="module">
+        import { generateMCQInterviewQuestions } from './src/utils/geminiAPI.js';
+
+        async function testEnvVars() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing environment variables...</p>';
+            
+            try {
+                // Check if import.meta.env exists
+                if (typeof import.meta.env === 'undefined') {
+                    throw new Error('import.meta.env is undefined');
+                }
+                
+                // Check if VITE_GOOGLE_API_KEY exists
+                const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+                
+                if (apiKey) {
+                    resultDiv.innerHTML = `
+                        <div class="test-result success">
+                            <h2>Environment Variables Test: PASS</h2>
+                            <p>VITE_GOOGLE_API_KEY found!</p>
+                            <p>Key (first 10 chars): ${apiKey.substring(0, 10)}...</p>
+                            <p>Key length: ${apiKey.length} characters</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="test-result error">
+                            <h2>Environment Variables Test: FAIL</h2>
+                            <p>VITE_GOOGLE_API_KEY not found!</p>
+                            <h3>Available environment variables:</h3>
+                            <ul>
+                                ${Object.keys(import.meta.env).map(key => `<li>${key}: ${import.meta.env[key]}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Environment Variables Test: ERROR</h2>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testDirectAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing direct API call...</p>';
+            
+            try {
+                // Get API key
+                const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+                
+                if (!apiKey) {
+                    throw new Error('API key not found');
+                }
+                
+                // Use gemini-1.5-flash model (fast, cheaper, best for real-time Q&A, chat, interviews)
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                
+                const prompt = `Generate a single, simple multiple-choice question about React hooks with 4 options and indicate the correct answer. Format as JSON:
+                {
+                  "question": "string",
+                  "options": ["A", "B", "C", "D"],
+                  "answer": "A"
+                }`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`API error: ${response.status} ${response.statusText} - ${errorText}`);
+                }
+                
+                const data = await response.json();
+                const responseText = data.candidates[0].content.parts[0].text;
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Direct API Test: PASS</h2>
+                        <p>Response received from Gemini API:</p>
+                        <pre>${responseText}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Direct API Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+
+        async function testQuestionGeneration() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing question generation...</p>';
+            
+            try {
+                const candidateInfo = {
+                    name: "Test Candidate",
+                    text: "Software engineer with 3 years experience in React, Node.js, and JavaScript. Worked on e-commerce platforms and real-time applications."
+                };
+                
+                const questions = await generateMCQInterviewQuestions(candidateInfo);
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Question Generation Test: PASS</h2>
+                        <p>Generated ${questions.length} questions:</p>
+                        ${questions.map((q, i) => `
+                            <div class="question">
+                                <strong>Q${i+1} (${q.difficulty}):</strong> ${q.question}<br>
+                                Options: ${q.options.join(' | ')}<br>
+                                Answer: ${q.answer}<br>
+                                Time Limit: ${q.timeLimit}s
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Question Generation Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+
+        async function testMultipleGenerations() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing multiple question generations for randomness...</p>';
+            
+            try {
+                const questionSets = [];
+                
+                // Generate 3 sets of questions
+                for (let i = 0; i < 3; i++) {
+                    const candidateInfo = {
+                        name: `Test Candidate ${i+1}`,
+                        text: `Software engineer with ${i+2} years experience in React, Node.js, and JavaScript. 
+                               Specialized in ${i % 2 === 0 ? 'e-commerce platforms' : 'real-time applications'}. 
+                               Familiar with ${i % 3 === 0 ? 'databases' : i % 3 === 1 ? 'cloud deployment' : 'microservices architecture'}.`
+                    };
+                    
+                    const questions = await generateMCQInterviewQuestions(candidateInfo);
+                    questionSets.push({
+                        set: i+1,
+                        questions: questions.map(q => q.question) // Only store questions for comparison
+                    });
+                    
+                    // Add a small delay to avoid rate limiting
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+                
+                // Check for uniqueness
+                const allQuestions = questionSets.flatMap(set => set.questions);
+                const uniqueQuestions = new Set(allQuestions);
+                const isRandom = uniqueQuestions.size > 6; // Should have more than 6 unique questions if random
+                
+                // Display results
+                let html = `<div class="test-result ${isRandom ? 'success' : 'error'}">
+                    <h2>Randomness Test Results</h2>
+                    <p><strong>${isRandom ? 'PASS' : 'FAIL'}:</strong> ${isRandom ? 'Questions are randomly generated' : 'Questions appear to be fixed'}</p>
+                    <p>Generated ${allQuestions.length} questions with ${uniqueQuestions.size} unique questions</p>
+                </div>`;
+                
+                questionSets.forEach(set => {
+                    html += `<div class="test-result info">
+                        <h3>Set ${set.set}</h3>
+                        <ul>
+                            ${set.questions.map(q => `<li>${q}</li>`).join('')}
+                        </ul>
+                    </div>`;
+                });
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Multiple Generations Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

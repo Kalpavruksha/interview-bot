@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Interview Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #cce7ff; border: 1px solid #99d6ff; color: #004085; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; margin: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Interview Flow</h1>
+    <div>
+        <button onclick="testQuestionGeneration()">Test Question Generation</button>
+        <button onclick="testWelcomeBackLogic()">Test Welcome Back Logic</button>
+    </div>
+    <div id="result"></div>
+
+    <script type="module">
+        import { generateMCQInterviewQuestions } from './src/utils/geminiAPI.js';
+
+        async function testQuestionGeneration() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing question generation...</p>';
+            
+            try {
+                const candidateInfo = {
+                    name: "Test Candidate",
+                    text: "Software engineer with 3 years experience in React, Node.js, and JavaScript. Worked on e-commerce platforms and real-time applications."
+                };
+                
+                console.log('Calling generateMCQInterviewQuestions with candidate info:', candidateInfo);
+                const questions = await generateMCQInterviewQuestions(candidateInfo);
+                console.log('Received questions:', questions);
+                
+                // Check if questions are from fallback or real API
+                const isFallback = questions[0].question.includes("Which hook is used to manage state in React") ||
+                                questions[0].question.includes("HTTP method") ||
+                                questions[0].question.includes("virtual DOM");
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result ${isFallback ? 'error' : 'success'}">
+                        <h2>Question Generation Test: ${isFallback ? 'FAIL (Fallback)' : 'PASS (Real API)'}</h2>
+                        <p>Generated ${questions.length} questions:</p>
+                        ${questions.map((q, i) => `
+                            <div class="info" style="margin: 10px 0; padding: 10px; border-radius: 5px;">
+                                <strong>Q${i+1} (${q.difficulty}):</strong> ${q.question}<br>
+                                Options: ${q.options.join(' | ')}<br>
+                                Answer: ${q.answer}<br>
+                                Time Limit: ${q.timeLimit}s
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Question Generation Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+
+        async function testWelcomeBackLogic() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing welcome back logic...</p>';
+            
+            try {
+                // Simulate storing interview state
+                const mockInterviewState = {
+                    interview: JSON.stringify({
+                        currentCandidate: {
+                            id: "test123",
+                            name: "Test Candidate",
+                            email: "test@example.com",
+                            phone: "123-456-7890"
+                        },
+                        interviewStatus: "in-progress",
+                        questions: [],
+                        currentQuestionIndex: 0
+                    })
+                };
+                
+                // Store in localStorage
+                localStorage.setItem('persist:root', JSON.stringify(mockInterviewState));
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Welcome Back Logic Test: PASS</h2>
+                        <p>Simulated storing interview state in localStorage.</p>
+                        <p>To test the full welcome back flow:</p>
+                        <ol>
+                            <li>Refresh the page</li>
+                            <li>You should see the Welcome Back modal</li>
+                            <li>Click "Resume Interview" to continue</li>
+                        </ol>
+                        <button onclick="clearTestState()">Clear Test State</button>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Welcome Back Logic Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+        
+        function clearTestState() {
+            localStorage.removeItem('persist:root');
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="test-result success">
+                    <h2>Test State Cleared</h2>
+                    <p>LocalStorage has been cleared. Refresh the page to start fresh.</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload Test</title>
+</head>
+<body>
+    <h1>File Upload Test</h1>
+    
+    <div id="drop-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+        <p>Click or drag file to this area to upload</p>
+        <input type="file" id="fileElem" accept=".pdf,.docx" style="display: none;">
+    </div>
+    
+    <div id="fileInfo" style="margin-top: 20px;"></div>
+
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const fileElem = document.getElementById('fileElem');
+        const fileInfo = document.getElementById('fileInfo');
+        
+        // Set up click handler for the drop area
+        document.getElementById('drop-area').addEventListener('click', function() {
+            fileElem.click();
+        });
+        
+        // Set up file input change handler
+        fileElem.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileInfo.innerHTML = `
+                    <h2>File Selected</h2>
+                    <p>Name: ${file.name}</p>
+                    <p>Type: ${file.type}</p>
+                    <p>Size: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

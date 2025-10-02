@@ -1,0 +1,17 @@
+kalpavruksha g
+kalpavruksha g@example.com
+8088252231
+
+Software Engineer
+
+SUMMARY
+Experienced software engineer with 5+ years of experience in web development, specializing in React and Node.js.
+
+EXPERIENCE
+Senior Software Engineer | Tech Corp | Jan 2020 - Present
+- Developed and maintained web applications using React and Node.js
+- Collaborated with cross-functional teams to deliver high-quality software solutions
+
+Software Engineer | Innovate Inc | Jun 2017 - Dec 2019
+- Built responsive user interfaces with React and Redux
+- Implemented RESTful APIs using Node.js and Express

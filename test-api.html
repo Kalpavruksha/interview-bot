@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini API Test</title>
+</head>
+<body>
+    <h1>Gemini API Test</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        import { generateMCQInterviewQuestions } from './src/utils/geminiAPI.js';
+
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                resultDiv.innerHTML = '<p>Testing Gemini API...</p>';
+                
+                const candidateInfo = {
+                    name: "Test Candidate",
+                    text: "Software engineer with 3 years experience in React, Node.js, and JavaScript. Worked on e-commerce platforms and real-time applications."
+                };
+                
+                const questions = await generateMCQInterviewQuestions(candidateInfo);
+                
+                resultDiv.innerHTML = `
+                    <h2>API Test Results</h2>
+                    <p>Generated ${questions.length} questions:</p>
+                    <ul>
+                        ${questions.map((q, i) => `
+                            <li>
+                                <strong>Q${i+1} (${q.difficulty}):</strong> ${q.question}<br>
+                                Options: ${q.options.join(' | ')}<br>
+                                Answer: ${q.answer}<br>
+                                Time Limit: ${q.timeLimit}s
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        testAPI();
+    </script>
+</body>
+</html>

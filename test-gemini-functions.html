@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Gemini Functions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #cce7ff; border: 1px solid #99d6ff; color: #004085; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; margin: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Gemini Functions</h1>
+    <div>
+        <button onclick="testQuestionGeneration()">Test Question Generation</button>
+        <button onclick="testAnswerScoring()">Test Answer Scoring</button>
+        <button onclick="testSummaryGeneration()">Test Summary Generation</button>
+    </div>
+    <div id="result"></div>
+
+    <script type="module">
+        import { generateMCQInterviewQuestions, scoreCandidateAnswer, generateMCQCandidateSummary } from './src/utils/geminiAPI.js';
+
+        async function testQuestionGeneration() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing question generation...</p>';
+            
+            try {
+                const candidateInfo = {
+                    name: "Test Candidate",
+                    text: "Software engineer with 3 years experience in React, Node.js, and JavaScript. Worked on e-commerce platforms and real-time applications."
+                };
+                
+                const questions = await generateMCQInterviewQuestions(candidateInfo);
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Question Generation Test: PASS</h2>
+                        <p>Generated ${questions.length} questions:</p>
+                        ${questions.map((q, i) => `
+                            <div class="info" style="margin: 10px 0; padding: 10px; border-radius: 5px;">
+                                <strong>Q${i+1} (${q.difficulty}):</strong> ${q.question}<br>
+                                Options: ${q.options.join(' | ')}<br>
+                                Answer: ${q.answer}<br>
+                                Time Limit: ${q.timeLimit}s
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Question Generation Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+
+        async function testAnswerScoring() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing answer scoring...</p>';
+            
+            try {
+                // Create a sample question
+                const sampleQuestion = {
+                    id: 1,
+                    type: "mcq",
+                    question: "Which hook is used to manage state in React?",
+                    options: ["useEffect", "useContext", "useState", "useMemo"],
+                    answer: "C",
+                    explanation: "useState is the React hook used to manage state in functional components.",
+                    difficulty: 'easy',
+                    timeLimit: 20
+                };
+                
+                const score = await scoreCandidateAnswer(sampleQuestion, "useState is used to manage state in React functional components.");
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Answer Scoring Test: PASS</h2>
+                        <p>Score: ${score.score}/100</p>
+                        <p>Feedback: ${score.feedback}</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Answer Scoring Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+
+        async function testSummaryGeneration() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing summary generation...</p>';
+            
+            try {
+                // Create sample questions and answers
+                const sampleQuestions = [
+                    {
+                        id: 1,
+                        type: "mcq",
+                        question: "Which hook is used to manage state in React?",
+                        options: ["useEffect", "useContext", "useState", "useMemo"],
+                        answer: "C",
+                        explanation: "useState is the React hook used to manage state in functional components.",
+                        difficulty: 'easy',
+                        timeLimit: 20
+                    }
+                ];
+                
+                const sampleAnswers = [
+                    {
+                        questionId: 1,
+                        selectedOption: "C",
+                        score: 90
+                    }
+                ];
+                
+                const summary = await generateMCQCandidateSummary(sampleQuestions, sampleAnswers);
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>Summary Generation Test: PASS</h2>
+                        <p>Final Score: ${summary.score}/100</p>
+                        <p>Summary: ${summary.summary}</p>
+                        <p>Strengths: ${summary.strengths}</p>
+                        <p>Improvements: ${summary.improvements}</p>
+                        <p>Recommendation: ${summary.recommendation}</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>Summary Generation Test: FAIL</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

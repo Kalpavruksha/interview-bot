@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Key Test</title>
+</head>
+<body>
+    <h1>API Key Test</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        // Test if the API key is accessible
+        const resultDiv = document.getElementById('result');
+        
+        try {
+            const apiKey = import.meta.env?.VITE_GOOGLE_API_KEY || undefined;
+
+            if (apiKey) {
+                resultDiv.innerHTML = `
+                    <p style="color: green;">✅ API Key found!</p>
+                    <p>Key (first 10 chars): ${apiKey.substring(0, 10)}...</p>
+                    <p>Key length: ${apiKey.length} characters</p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p style="color: red;">❌ API Key not found!</p>';
+            }
+        } catch (error) {
+            resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+        }
+    </script>
+</body>
+</html>

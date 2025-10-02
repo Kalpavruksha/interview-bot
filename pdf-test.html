@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF.js Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.min.mjs" type="module"></script>
+</head>
+<body>
+    <h1>PDF.js Test</h1>
+    <input type="file" id="pdfFile" accept=".pdf" />
+    <div id="output"></div>
+
+    <script type="module">
+        import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.min.mjs';
+        
+        // Set the worker URL
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs';
+        
+        document.getElementById('pdfFile').addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                
+                let textContent = '';
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContentObj = await page.getTextContent();
+                    const pageText = textContentObj.items.map(item => item.str).join(' ');
+                    textContent += pageText + '\n';
+                }
+                
+                document.getElementById('output').innerHTML = '<pre>' + textContent + '</pre>';
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('output').innerHTML = '<p>Error: ' + error.message + '</p>';
+            }
+        });
+    </script>
+</body>
+</html>

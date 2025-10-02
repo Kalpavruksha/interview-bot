@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Flagged Feature</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #cce7ff; border: 1px solid #99d6ff; color: #004085; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; margin: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Flagged Feature</h1>
+    <div>
+        <button onclick="simulateTabSwitches()">Simulate 4 Tab Switches</button>
+        <button onclick="resetTest()">Reset Test</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        let tabSwitchCount = 0;
+        let flagged = false;
+        
+        function simulateTabSwitches() {
+            const resultDiv = document.getElementById('result');
+            
+            // Simulate 4 tab switches
+            for (let i = 1; i <= 4; i++) {
+                simulateTabSwitch(i);
+            }
+        }
+        
+        function simulateTabSwitch(count) {
+            const resultDiv = document.getElementById('result');
+            
+            // Simulate document.hidden = true (tab switch away)
+            if (count <= 3) {
+                resultDiv.innerHTML += `
+                    <div class="test-result info">
+                        <h3>Tab Switch ${count}</h3>
+                        <p>Simulated tab switch away from the interview page</p>
+                    </div>
+                `;
+            } else {
+                // On the 4th switch, flag the candidate
+                if (!flagged) {
+                    flagged = true;
+                    resultDiv.innerHTML += `
+                        <div class="test-result success">
+                            <h3>Candidate Flagged!</h3>
+                            <p>After ${count} tab switches, the candidate has been flagged for review</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            tabSwitchCount = count;
+        }
+        
+        function resetTest() {
+            tabSwitchCount = 0;
+            flagged = false;
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

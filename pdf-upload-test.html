@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Upload Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            margin: 20px 0;
+        }
+        .upload-area:hover {
+            border-color: #007bff;
+            background-color: #f0f8ff;
+        }
+        .file-input {
+            display: none;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #e9f7ef;
+            border: 1px solid #28a745;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>PDF Upload Test</h1>
+    <p>This page allows you to test PDF file uploads for the Interview Bot application.</p>
+    
+    <div class="upload-area" id="uploadArea">
+        <p>Click or drag a PDF file here to upload</p>
+        <p style="font-size: 14px; color: #666;">Support for PDF files only</p>
+        <input type="file" class="file-input" id="fileInput" accept=".pdf">
+    </div>
+    
+    <div id="result"></div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+
+        // Click handler for upload area
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#007bff';
+            uploadArea.style.backgroundColor = '#e3f2fd';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = '#f9f9f9';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = '#f9f9f9';
+            
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        // File input change handler
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // Handle file processing
+        function handleFile(file) {
+            // Display file info
+            resultDiv.innerHTML = `
+                <h3>Selected File:</h3>
+                <p><strong>Name:</strong> ${file.name}</p>
+                <p><strong>Type:</strong> ${file.type}</p>
+                <p><strong>Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+            `;
+            
+            // Check if it's a PDF file
+            if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+                resultDiv.className = 'result';
+                resultDiv.innerHTML += '<p style="color: #28a745;">✓ Valid PDF file selected!</p>';
+                
+                // In a real application, you would send this file to your backend or process it with JavaScript
+                // For now, we'll just simulate processing
+                resultDiv.innerHTML += '<p>Processing would begin now...</p>';
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML += '<p style="color: #dc3545;">✗ Invalid file type. Please select a PDF file.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Direct Gemini API Test</h1>
+    <button onclick="testAPI()">Test API Directly</button>
+    <div id="result"></div>
+
+    <script type="module">
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing Gemini API directly...</p>';
+            
+            try {
+                // Get API key
+                const apiKey = import.meta.env?.VITE_GOOGLE_API_KEY || undefined;
+                
+                if (!apiKey) {
+                    throw new Error('API key not found');
+                }
+                
+                // Use gemini-1.5-flash model (fast, cheaper, best for real-time Q&A, chat, interviews)
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                
+                const prompt = `Generate a single, simple multiple-choice question about React hooks with 4 options and indicate the correct answer. Format as JSON:
+                {
+                  "question": "string",
+                  "options": ["A", "B", "C", "D"],
+                  "answer": "A"
+                }`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const responseText = data.candidates[0].content.parts[0].text;
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>API Test Successful</h2>
+                        <p>Response received from Gemini API:</p>
+                        <pre>${responseText}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>API Test Failed</h2>
+                        <p>Error: ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

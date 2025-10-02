@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles for the AI Interview Assistant */
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+/* Anti-copy styles for questions */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.secure-text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Additional measures to prevent copying */
+  pointer-events: none;
+}
+
+.secure-question {
+  position: relative;
+}
+
+.secure-question::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Re-enable pointer events for the container but keep text non-selectable */
+.question-card {
+  pointer-events: auto;
+  position: relative;
+}
+
+/* Custom component styles using Tailwind's @apply */
+@layer components {
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm transition-shadow hover:shadow-md;
+  }
+  
+  .card-highlight {
+    @apply bg-white rounded-xl border-2 border-blue-500 shadow-lg;
+  }
+  
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply btn bg-blue-600 text-white hover:bg-blue-700;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-900 hover:bg-gray-300;
+  }
+  
+  .btn-destructive {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+  
+  .btn-outline {
+    @apply btn border border-gray-300 bg-transparent hover:bg-gray-100;
+  }
+  
+  .btn-ghost {
+    @apply btn hover:bg-gray-100;
+  }
+  
+  .btn-link {
+    @apply btn underline-offset-4 hover:underline text-blue-600;
+  }
+  
+  .btn-sm {
+    @apply h-9 px-3 rounded-md text-sm;
+  }
+  
+  .btn-lg {
+    @apply h-11 px-8 rounded-md text-lg;
+  }
+  
+  .btn-default {
+    @apply h-10 py-2 px-4 rounded-md;
+  }
+  
+  /* Input styles */
+  .input-field {
+    @apply border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  }
+  
+  .textarea-field {
+    @apply border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[120px] resize-y;
+  }
+  
+  /* Tab styles */
+  .tab-list {
+    @apply flex space-x-2 border-b border-gray-200;
+  }
+  
+  .tab-button {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-t-md px-3 py-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .tab-button-active {
+    @apply tab-button bg-white text-blue-600 border-b-2 border-blue-600;
+  }
+  
+  .tab-button-inactive {
+    @apply tab-button text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+  }
+  
+  /* Question styles */
+  .question-card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6;
+  }
+  
+  .question-header {
+    @apply flex items-center mb-4;
+  }
+  
+  .question-icon {
+    @apply text-blue-600 bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4 text-xl;
+  }
+  
+  .question-title {
+    @apply text-xl font-semibold text-gray-800;
+  }
+  
+  .question-text {
+    @apply text-gray-700 text-base leading-relaxed;
+  }
+  
+  .answer-textarea {
+    @apply w-full border border-gray-300 rounded-md p-3 mt-4 text-gray-800 text-base focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none resize-y;
+  }
+  
+  /* Timer styles */
+  .timer-container {
+    @apply bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-4 mb-6;
+  }
+  
+  .timer-header {
+    @apply flex justify-between items-center mb-2;
+  }
+  
+  .timer-title {
+    @apply text-sm font-medium text-blue-800;
+  }
+  
+  .timer-display {
+    @apply text-2xl font-bold text-center text-gray-900 my-2;
+  }
+  
+  .timer-progress {
+    @apply w-full bg-blue-200 rounded-full h-2.5;
+  }
+  
+  .timer-progress-bar {
+    @apply bg-blue-600 h-2.5 rounded-full transition-all duration-1000;
+  }
+  
+  /* Candidate styles */
+  .candidate-item {
+    @apply bg-white rounded-lg border border-gray-200 p-4 mb-3 hover:bg-blue-50 transition-colors cursor-pointer;
+  }
+  
+  .candidate-header {
+    @apply flex justify-between items-center mb-2;
+  }
+  
+  .candidate-name {
+    @apply text-lg font-semibold text-gray-900;
+  }
+  
+  .candidate-email {
+    @apply text-gray-600 text-sm;
+  }
+  
+  .candidate-score {
+    @apply text-xl font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full;
+  }
+  
+  .candidate-summary {
+    @apply text-gray-700 text-sm mt-2;
+  }
+  
+  /* Progress styles */
+  .progress-container {
+    @apply flex items-center mb-6;
+  }
+  
+  .progress-text {
+    @apply font-medium text-gray-700 mr-4 min-w-[120px];
+  }
+  
+  .progress-bar {
+    @apply flex-1 bg-gray-200 rounded-full h-2.5;
+  }
+  
+  .progress-bar-fill {
+    @apply bg-blue-600 h-2.5 rounded-full transition-all duration-300;
+  }
+  
+  /* Summary styles */
+  .summary-card {
+    @apply text-center p-8;
+  }
+  
+  .summary-icon {
+    @apply text-5xl text-green-500 mb-4;
+  }
+  
+  .summary-title {
+    @apply text-3xl font-bold text-gray-900 mb-2;
+  }
+  
+  .summary-text {
+    @apply text-gray-700 text-lg mb-6;
+  }
+  
+  /* Welcome back modal */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+  }
+  
+  .modal-content {
+    @apply bg-white rounded-xl shadow-xl max-w-md w-full mx-4;
+  }
+  
+  .modal-header {
+    @apply bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-xl p-5;
+  }
+  
+  .modal-title {
+    @apply text-xl font-bold text-blue-800;
+  }
+  
+  .modal-body {
+    @apply p-6;
+  }
+  
+  .modal-footer {
+    @apply p-4 border-t border-gray-200 flex justify-end space-x-3;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .question-card {
+    padding: 4vw;
+  }
+  
+  .timer-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .candidate-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .candidate-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .progress-text {
+    margin-bottom: 1rem;
+  }
+}

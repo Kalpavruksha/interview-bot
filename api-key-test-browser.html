@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Key Test in Browser</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        pre { background-color: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>API Key Test in Browser</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        // Test if the API key is accessible in the browser environment
+        const resultDiv = document.getElementById('result');
+        
+        try {
+            const apiKey = import.meta.env?.VITE_GOOGLE_API_KEY || undefined;
+
+            if (apiKey) {
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <h2>API Key Test: PASS</h2>
+                        <p>API Key found!</p>
+                        <p>Key (first 10 chars): ${apiKey.substring(0, 10)}...</p>
+                        <p>Key length: ${apiKey.length} characters</p>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <h2>API Key Test: FAIL</h2>
+                        <p>API Key not found!</p>
+                        <h3>Available environment variables:</h3>
+                        <ul>
+                            ${Object.keys(import.meta.env || {}).map(key => `<li>${key}: ${import.meta.env[key]}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            resultDiv.innerHTML = `
+                <div class="test-result error">
+                    <h2>API Key Test: ERROR</h2>
+                    <p>Error: ${error.message}</p>
+                    <pre>${error.stack}</pre>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

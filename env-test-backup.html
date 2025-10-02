@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Variable Test</title>
+</head>
+<body>
+    <h1>Environment Variable Test</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        // Test accessing environment variables
+        const resultDiv = document.getElementById('result');
+        
+        try {
+            // Check if import.meta.env exists
+            if (typeof import.meta.env === 'undefined') {
+                resultDiv.innerHTML = '<p style="color: red;">❌ import.meta.env is undefined</p>';
+            } else {
+                // Check if VITE_GOOGLE_API_KEY exists
+                const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+                
+                if (apiKey) {
+                    resultDiv.innerHTML = `
+                        <p style="color: green;">✅ VITE_GOOGLE_API_KEY found!</p>
+                        <p>Key (first 10 chars): ${apiKey.substring(0, 10)}...</p>
+                        <p>Key length: ${apiKey.length} characters</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<p style="color: red;">❌ VITE_GOOGLE_API_KEY not found!</p>';
+                    
+                    // List all available environment variables
+                    resultDiv.innerHTML += '<h3>Available environment variables:</h3><ul>';
+                    for (const key in import.meta.env) {
+                        if (import.meta.env.hasOwnProperty(key)) {
+                            resultDiv.innerHTML += `<li>${key}: ${import.meta.env[key]}</li>`;
+                        }
+                    }
+                    resultDiv.innerHTML += '</ul>';
+                }
+            }
+        } catch (error) {
+            resultDiv.innerHTML = `
+                <p style="color: red;">❌ Error accessing environment variables:</p>
+                <pre>${error.message}</pre>
+            `;
+        }
+    </script>
+</body>
+</html>
