@@ -16,9 +16,7 @@ This is an AI-powered interview assistant application with two main components:
 - **React Query** for server state management
 - **Vite** as the build tool
 
-### Backend
-- **Go (Golang)** with Gin framework
-- RESTful API architecture
+
 
 ### AI/ML Services
 - **Google Gemini API** for question generation and answer evaluation
@@ -56,12 +54,12 @@ This is an AI-powered interview assistant application with two main components:
 - **Tab synchronization for demo purposes**
 
 ## Implementation Status
-
 This application fully implements all requirements specified in the assignment. For a detailed checklist of implemented features, see [IMPLEMENTATION_CHECKLIST.md](IMPLEMENTATION_CHECKLIST.md).
 
 ## Application Architecture
 
-![Application Plan](plan.jpeg)
+![Application Plan](assets/plan.jpeg)
+
 
 *Hand-drawn plan and flow of application architecture*
 
