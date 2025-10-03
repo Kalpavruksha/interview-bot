@@ -58,7 +58,7 @@ This application fully implements all requirements specified in the assignment. 
 
 ## Application Architecture
 
-![Application Plan](assets/plan.jpeg)
+![Application Plan](plan.jpg)
 
 
 *Hand-drawn plan and flow of application architecture*
