@@ -4,6 +4,46 @@ This is an AI-powered interview assistant application with two main components:
 1. Interviewee Dashboard - For candidates to take timed interviews
 2. Interviewer Dashboard - For interviewers to view candidate results
 
+## Tech Stack
+
+### Frontend
+- **React 19.1.1** with hooks and functional components
+- **React Router v7.9.3** for client-side routing
+- **Redux Toolkit** with **Redux Persist** for state management and data persistence
+- **Tailwind CSS** for styling
+- **Ant Design** for UI components
+- **Framer Motion** for animations
+- **React Query** for server state management
+- **Vite** as the build tool
+
+### Backend
+- **Go (Golang)** with Gin framework
+- RESTful API architecture
+
+### AI/ML Services
+- **Google Gemini API** for question generation and answer evaluation
+
+### File Processing
+- **pdf.js** for PDF parsing
+- **mammoth.js** for DOCX parsing
+- **Tesseract.js** for OCR capabilities
+
+### Storage
+- **Redux Persist** with localStorage for client-side data persistence
+- **IndexedDB** via Dexie.js for more robust client-side storage
+- **MongoDB** (optional) for server-side persistent storage
+
+### Utilities
+- **Axios** for HTTP requests
+- **Day.js** for date/time handling
+- **React Hot Toast** for notifications
+- **Zod** for validation
+
+### Development Tools
+- **Vite** for fast development and building
+- **Concurrently** for running frontend and backend simultaneously
+- **ESLint** and **Prettier** for code quality
+
 ## Features
 
 - Resume upload (PDF/DOCX) with automatic field extraction
@@ -18,6 +58,12 @@ This is an AI-powered interview assistant application with two main components:
 ## Implementation Status
 
 This application fully implements all requirements specified in the assignment. For a detailed checklist of implemented features, see [IMPLEMENTATION_CHECKLIST.md](IMPLEMENTATION_CHECKLIST.md).
+
+## Application Architecture
+
+![Application Plan](plan.jpeg)
+
+*Hand-drawn plan and flow of application architecture*
 
 ## How It Works
 
