@@ -1,7 +1,6 @@
 # test_rag.py
 import requests
 import json
-
 # Test the RAG system
 def test_rag_query():
     url = "http://localhost:8000/rag_query"
