@@ -1,6 +1,6 @@
 # rag_server.py (Gemini RAG version) 
 import os
-import json 
+import json
 from fastapi import FastAPI
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
