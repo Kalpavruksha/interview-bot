@@ -2,7 +2,7 @@
 import os
 import json
 from fastapi import FastAPI
-from pydantic import BaseModel 
+from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import chromadb
 from chromadb.config import Settings
