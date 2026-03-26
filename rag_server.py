@@ -1,5 +1,5 @@
 # rag_server.py (Gemini RAG version) 
-import os 
+import os. 
 import json 
 from fastapi import FastAPI
 from pydantic import BaseModel
