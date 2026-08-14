@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import InterviewerPage from './components/InterviewerPage'
 import IntervieweePage from './components/IntervieweePage'
-
+ 
 function App() {
   return (
     <div className="min-h-screen bg-gray-50">
